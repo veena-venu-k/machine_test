@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">  
+  </script>
+<body>
+{% block content %}
+<h1>User Details</h1>
+<br/>
+<form action="" method="POST" id="usr_form">
+{% csrf_token %}
+{{form.as_p}}
+    <input type="submit" value="submit" class="btn-btn-success">
+</form>
+<br/>
+
+
+
+
+<h1>User Details</h1>
+<br/>
+<form action="" method="POST">
+{% csrf_token %}
+    
+    {% if show %}
+    <table>
+      <tr>
+        <th style="color:#E9967A"><u>User Name</u></th>
+        <th style="color:#E9967A"><u>UserAddress</u></th>
+        <th style="color:#E9967A"><u>User_Age</u></th>
+        <th style="color:#E9967A"><u>Date Of Birth </u></th>
+        <th style="color:#E9967A"><u>skills</u></th>
+       
+      </tr>
+     
+   
+      {% for li in show %}
+      <tr>
+        <td>{{li.user_Name}}</td>
+        <td>{{li.user_Address}}</td>
+        <td>{{li.user_Age}}</td>
+        <td>{{li.Date_Of_birth}}</td>
+        <td>{{li.skills}}</td>
+        
+     
+      </tr>
+      {% endfor %}
+    </table>
+
+    {% else %}
+    <h1>No Data</h1>
+  {% endif %}
+</form>
+
+
+
+
+
+
+{% endblock %}
+</body>
+</html>
+ 
+     
+<script>
+$(document).ready(function () {
+  $("#usr_form").submit(function (e) {
+    e.preventDefault();
+    var serializedData = $(this).serialize();
+    console.log("entered here 1", serializedData);
+
+    $.ajax({
+        type: 'POST',
+        url: "{% url 'index2' %}",
+        data: serializedData,
+
+        success: function (response) {
+            console.log("response", response);
+            window.location.replace(" ");
+
+            
+        },
+        error: function (response) {
+            alert("error");
+        }
+    })
+  })
+});
+</script>
